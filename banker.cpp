@@ -131,6 +131,61 @@ int getAvail(char type){
 
 
 int main(){
-    
+    int A = getAvail('A');
+    int B = getAvail('B');
+    int C = getAvail('C');
+    // bitmap of processes. If 0, the
+    // associated process is skipped when
+    // checking for process to complete next
+    bool pFlags[] = {1,1,1,1,1};
+    // flag to loop only if a process was
+    // able to be trated safely, 0 if unsafe
+    bool safetyFlag = 0;
+
+    do{
+        for (int currentP = 0; currentP<5; ++currentP){
+        if (pFlags[currentP] == 1){
+            // if all resources more than
+            // max resources of process
+            if (A >= getMax(currentP,A) &&
+            B >= getMax(currentP,B) &&
+            C >= getMax(currentP,C)){
+                // add process's resources
+                // to usable ones
+                A += getAlloc(currentP,A);
+                B += getAlloc(currentP,B);
+                C += getAlloc(currentP,C);
+                // change bitmap to prevent
+                // unneeded repeats
+                pFlags[currentP] = 0;
+                // currently safe state
+                // allow another loop
+                safetyFlag = 1;
+
+                cout << "Treated process";
+                cout << currentP << "\n\n";
+            }
+            }
+        }
+
+
+        if (safetyFlag == 0){
+            cout << "No other process can be ";
+            cout << "treated. The state is unsafe\n";
+            return 0;
+        }
+        safetyFlag = 0;
+        // if any process have not had
+        // resources allocated to them,
+        // keep looping
+    } while (pFlags[0] == 1 ||
+    pFlags[1] == 1 ||
+    pFlags[2] == 1 ||
+    pFlags[3] == 1 ||
+    pFlags[4] == 1);
+
+    // all processes dealt with
+    cout << "\nThe system is in a safe state\n";
+    return 0;
 }
 
