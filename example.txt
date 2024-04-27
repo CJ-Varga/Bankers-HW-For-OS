@@ -1,12 +1,21 @@
-Treated process0
+Current: A: 3 B: 3 C: 2
+P0 Max: A: 7 B: 5 C: 3
+Current: A: 3 B: 3 C: 2
+P1 Max: A: 3 B: 2 C: 2
+Treated process 1...
 
-Treated process1
+Current: A: 5 B: 3 C: 2
+P2 Max: A: 9 B: 0 C: 2
+Current: A: 5 B: 3 C: 2
+P3 Max: A: 2 B: 2 C: 2
+Treated process 3...
 
-Treated process2
+Current: A: 7 B: 4 C: 3
+P4 Max: A: 4 B: 3 C: 3
+Treated process 4...
 
-Treated process3
-
-Treated process4
-
-
-The system is in a safe state
+Current: A: 7 B: 4 C: 5
+P0 Max: A: 7 B: 5 C: 3
+Current: A: 7 B: 4 C: 5
+P2 Max: A: 9 B: 0 C: 2
+No other process can be treated. The state is unsafe.

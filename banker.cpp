@@ -11,13 +11,14 @@
 #include <string>
 
 using namespace std;
+using std::cout;
 
 // all get functions return -1 if resource
 // is not found
 
 // get A B or C of resource allocated to a Process
 int getAlloc(int process, char type){
-    int spaces;
+    int spaces = 0;
     // identify how many numbers traversed
     // to get to right resource
     if (type == 'A') spaces = 0;
@@ -58,12 +59,12 @@ int getAlloc(int process, char type){
 
 // get max A B or C of Process
 int getMax(int process, char type){
-    int spaces;
+    int spaces = 0;
     // identify how many numbers traversed
     // to get to right resource
-    if (type == 'A') spaces = 3;
-    if (type == 'B') spaces = 4;
-    if (type == 'C') spaces = 5;
+    if (type == 'A') spaces += 3;
+    if (type == 'B') spaces += 4;
+    if (type == 'C') spaces += 5;
 
     // return error if process unknown
     if (process <= -1) return -1;
@@ -90,17 +91,19 @@ int getMax(int process, char type){
         //prevent infinite loop
         if (counter >= 200){
             input.close();
+            //cout << "\n ERROR1\n";
             return -1;
         }
     }
     input.close();
+    //cout << "\n ERROR2\n";
     return -1;
 }
 
 // get available resources from txt
 // only accurate at start of algorithm
 int getAvail(char type){
-    int spaces;
+    int spaces = 0;
     // identify how many numbers traversed
     // to get to right resource
     if (type == 'A') spaces = 6;
@@ -145,16 +148,31 @@ int main(){
     do{
         for (int currentP = 0; currentP<5; ++currentP){
         if (pFlags[currentP] == 1){
+            
+            //print current status
+            cout << "Current: ";
+            cout << "A: " << A << " ";
+            cout << "B: " << B << " ";
+            cout << "C: " << C << "\n";
+
+            cout << "P" << currentP << " Max: ";
+            cout << "A: ";
+            cout << getMax(currentP,'A') << " ";
+            cout << "B: ";
+            cout << getMax(currentP,'B') << " ";
+            cout << "C: ";
+            cout << getMax(currentP,'C') << "\n";
+            
             // if all resources more than
             // max resources of process
-            if (A >= getMax(currentP,A) &&
-            B >= getMax(currentP,B) &&
-            C >= getMax(currentP,C)){
+            if (A >= getMax(currentP,'A') &&
+            B >= getMax(currentP,'B') &&
+            C >= getMax(currentP,'C')){
                 // add process's resources
                 // to usable ones
-                A += getAlloc(currentP,A);
-                B += getAlloc(currentP,B);
-                C += getAlloc(currentP,C);
+                A += getAlloc(currentP,'A');
+                B += getAlloc(currentP,'B');
+                C += getAlloc(currentP,'C');
                 // change bitmap to prevent
                 // unneeded repeats
                 pFlags[currentP] = 0;
@@ -162,8 +180,8 @@ int main(){
                 // allow another loop
                 safetyFlag = 1;
 
-                cout << "Treated process";
-                cout << currentP << "\n\n";
+                cout << "Treated process ";
+                cout << currentP << "...\n\n";
             }
             }
         }
@@ -171,7 +189,7 @@ int main(){
 
         if (safetyFlag == 0){
             cout << "No other process can be ";
-            cout << "treated. The state is unsafe\n";
+            cout << "treated. The state is unsafe.\n";
             return 0;
         }
         safetyFlag = 0;
