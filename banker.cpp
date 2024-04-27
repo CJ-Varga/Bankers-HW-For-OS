@@ -146,6 +146,7 @@ int main(){
     bool safetyFlag = 0;
 
     do{
+        // for each process
         for (int currentP = 0; currentP<5; ++currentP){
         if (pFlags[currentP] == 1){
             
